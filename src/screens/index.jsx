@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import { color } from "../theme";
 
 import AccountParams from "./account-params";
@@ -10,7 +9,6 @@ import CreateCovFirst from "./create-cov-first";
 import CreateCovSecond from "./create-cov-second";
 import Home from "./home";
 import MessageSingleUser from "./message-single-user";
-import Messages from "./messages";
 import Profil from "./profil";
 import RequestCovFirst from "./request-cov-first";
 import RequestCovSecond from "./request-cov-second";
@@ -25,7 +23,11 @@ const Screens = {
     SignUp: { component: SignUp, title: "Inscription" },
   },
   userScreens: {
-    Home: { component: Home, title: "Acceuil",props :({navigation})=>({}) },
+    Home: {
+      component: Home,
+      title: "Acceuil",
+      hideBar : true
+    },
     AccountParams: { component: AccountParams, title: "Paramétres" },
     CreateCovFirst: {
       component: CreateCovFirst,
@@ -36,7 +38,6 @@ const Screens = {
       title: "Création de covoiturage",
     },
     MessageSingleUser: { component: MessageSingleUser, title: "Messages" },
-    Messages: { component: Messages, title: "Messages" },
     Profil: { component: Profil, title: "Profile" },
     RequestCovFirst: {
       component: RequestCovFirst,
@@ -58,8 +59,7 @@ const customHeader = (screens, setAuth) => {
     <Stack.Screen
       name={name}
       component={params.component}
-      options={{ title: params.title }}
-      
+      options={params.hideBar ? {headerShown : false}: { title: params.title }}
       initialParams={{ setAuth }}
       key={name}
     />
@@ -81,7 +81,7 @@ const Index = () => {
             headerTitleStyle: {
               fontFamily: "CatamaranBolder",
             },
-            headerTitleAlign : 'center',
+            headerTitleAlign: "center",
           }}
         >
           {customHeader(Screens.userScreens)}
@@ -97,7 +97,7 @@ const Index = () => {
             headerTitleStyle: {
               fontFamily: "CatamaranBolder",
             },
-            headerTitleAlign : 'center',
+            headerTitleAlign: "center",
             headerShown: false,
           }}
         >

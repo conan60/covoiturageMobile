@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import { StyleSheet, View, Image, TouchableWithoutFeedback, SafeAreaView, StatusBar as Bar, Platform } from 'react-native'
+import { StyleSheet, View, Image, TouchableWithoutFeedback, SafeAreaView, StatusBar as Bar, Platform, Switch } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,6 +17,23 @@ import Auth from './src/screens'
 import ButtonSlide from './src/components/button-slide'
 import Rating from './src/components/rating'
 import FromTo from './src/components/from-to'
+import Avatar from './src/components/avatar'
+import Person from './src/components/nbr-places'
+import Pref from './src/components/preference'
+import Date from './src/components/date'
+import Status from './src/components/cov-status'
+import Covoiturage from './src/components/covoiturage'
+import RecentCov from './src/components/recent-cov'
+import Modal from './src/components/modal'
+import Collapse from './src/components/collapse'
+import Messages from './src/components/messages'
+import Comment from './src/components/comment'
+import SendMessage from './src/components/send-message'
+import CovSent from './src/components/covoiturage-sent'
+import CovReceived from './src/components/covoiturage-received'
+import CovCreated from './src/components/covoiturage-create'
+import Message from  './src/components/message'
+import Feature from './src/components/feature-addition'
 
 const Stack = createStackNavigator();
 
@@ -27,16 +44,50 @@ export default function App() {
   return (
     <FontLoader>
       <NavigationContainer>
-
         <PressOutsideContext.Provider value={press}>
           {/* <TouchableWithoutFeedback 
         onPress={() => { console.log("PressedOut"); return setPress(new Object()) }}
         > */}
           <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
+              {/* <Feature/> */}
+              {/* <Message/>
+              <Message type='received' text="Hello every body wanna live together why we wanna live together tell me why tell me why ooooooooooooooooooh !!"/>
+              <Message/>
+              <Message type='received'/>
+              <Message type='received'/>
+              <Message/>
+              <Message type='received'/> */}
+              {/* <CovCreated/> */}
+              {/* <CovReceived/> */}
+              {/* <SendMessage bgColor={color.white}/> */}
+              {/* <Comment/> */}
+              {/* <Messages/> */}
+              {/* <Collapse/> */}
+              {/* <Modal/> */}
+              {/* <Auth /> */}
+              {/* <Covoiturage distance={11}/> */}
+              {/* <RecentCov/> */}
+              {/* <Status size={50} status="refuse" onClick={()=>console.log("malek")} /> */}
+              {/* <Date/> */}
+              {/* <Switch  onValueChange={()=>null} value={false} trackColor={{ false: color.black, true: color.yellow }} thumbColor={color.yellow}/> */}
+              {/* <Avatar
+                size="medium"
+                title="/"
+                image={null}
+                onPress={null}
+              /> */}
+              {/* <Person places={4} size={32}/> */}
+              {/* <Pref interdit places={4} size={24} color={color.black} name="pets"
+              luggage
+              smoking
+              comments
+              musical-notes
+              group
+              /> */}
               {/* <FromTo from="Sousse" to='Tunis' size={30}/> */}
               {/* <Rating isDisabled={false} value={2} size={32} onChange={()=>null}/> */}
-              {/* <Auth /> */}
+
               {/* <ButtonSlide value={12}/> */}
               {/* <Autocomplete
             onChange={e => console.log(e)}
@@ -92,8 +143,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: color.gray,
-    // alignItems: 'center',
-    // justifyContent: 'center',
     paddingTop: Platform.OS === 'android' ? Bar.currentHeight : 0,
   }
 });

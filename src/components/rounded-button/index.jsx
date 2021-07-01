@@ -1,29 +1,32 @@
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { color, size as defaultSize } from "../../theme";
 
-import React from 'react';
-import { StyleSheet,TouchableOpacity } from 'react-native';
-import {color,size} from '../../theme'
-
-
-const Index = (props)=> {
-  const {icon,onClick} = props
+const Index = (props) => {
+  const { icon, onClick, size = defaultSize.roundedButton } = props;
   return (
-    <TouchableOpacity onPress={onClick} style={styles.button}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onClick}
+      style={{
+        ...styles.button,
+        height: size,
+        width: size,
+        borderRadius: size / 2,
+      }}
+    >
       {icon()}
     </TouchableOpacity>
   );
-}
-
+};
 
 const styles = StyleSheet.create({
   button: {
-    flexDirection : "row",
-    height : size.roundedButton,
-    width : size.roundedButton,
-    borderRadius : size.roundedButton/2,
+    flexDirection: "row",
     backgroundColor: color.yellow,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
-export default Index
+export default Index;

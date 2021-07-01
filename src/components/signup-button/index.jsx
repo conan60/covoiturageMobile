@@ -8,7 +8,7 @@ import {color,size} from '../../theme'
 const Index = (props)=> {
   const {text,icon,onClick} = props
   return (
-    <TouchableOpacity onPress={onClick} style={styles.button}>
+    <TouchableOpacity activeOpacity={0.7} onPress={onClick} style={styles.button}>
       <View style={styles.icon}>{icon()}</View>
       <Text weight="bold" style={styles.text}>{text}</Text>
     </TouchableOpacity>

@@ -5,5 +5,8 @@ export const size = {
     textInput : 32,
     bottomMenu : 64,
     defaultRadius : 16,
-    heightSlider : 32
+    heightSlider : 32,
+    messageInput : 32,
+    textarea : 32,
+    featureButton : 40,
 }

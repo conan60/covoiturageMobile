@@ -6,10 +6,15 @@ import {color,size} from '../../theme'
 
 
 const Index = (props)=> {
-  const {text,onClick} = props
+  const {
+    text,
+    onClick,
+    bgColor = color.yellow, 
+    textColor = color.black
+  } = props
   return (
-    <TouchableOpacity onPress={onClick} style={styles.button}>
-      <Text weight="bold" style={styles.text}>{text}</Text>
+    <TouchableOpacity activeOpacity={0.7} onPress={onClick} style={{...styles.button,backgroundColor : bgColor}}>
+      <Text weight="bold" style={{...styles.text, color : textColor}}>{text}</Text>
     </TouchableOpacity>
   );
 }
@@ -17,16 +22,14 @@ const Index = (props)=> {
 
 const styles = StyleSheet.create({
   button: {
+    paddingHorizontal : 10,
     flexDirection : "row",
     height : size.button,
     borderRadius : size.button/2,
-    backgroundColor: color.yellow,
     alignItems: 'center',
     justifyContent: 'center',
   },
   text : {
-    flex : 1,
-    color : color.black,
     fontSize : 16,
     textAlign : "center"
   },

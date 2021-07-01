@@ -1,12 +1,12 @@
 import React,{useState} from 'react'
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import TextFont from '../text'
 import Input from '../input-icon'
 import { color, size } from '../../theme'
 
 
-const renderItem = (item) => {
-    return <View style={styles.list} key={item}><View style={styles.item}><TextFont style={styles.text}>{item}</TextFont></View></View>
+const renderItem = (item,index) => {
+    return <View style={styles.list} key={`${item}-${index}`}><View style={styles.item}><TextFont style={styles.text}>{item}</TextFont></View></View>
 }
 
 const EmptyList = () => <View style={styles.emptyList}><TextFont weight="bold" style={{fontSize : 16}} >Aucun résultat.</TextFont></View>

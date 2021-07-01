@@ -8,7 +8,7 @@ const TextFont = (props) => {
     
 
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
             <Text  {...textProps}>{children}</Text>
         </TouchableOpacity>
     )

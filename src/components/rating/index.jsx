@@ -8,6 +8,7 @@ const Index = (props) => {
     value = 0,
     size = 32,
     onChange = () => null,
+    unselectedColor = color.white
   } = props;
   return (
     <Rating
@@ -17,7 +18,7 @@ const Index = (props) => {
       defaultRating={value}
       size={size}
       selectedColor={color.yellow}
-      unSelectedColor={color.white}
+      unSelectedColor={unselectedColor}
     />
   );
 };

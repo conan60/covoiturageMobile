@@ -7,7 +7,7 @@ import { scrollInterpolator, animatedStyles } from "./animation";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
-const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 1.2);
+export const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 1.2);
 
 const DATA = [
   "🍪Recherche",

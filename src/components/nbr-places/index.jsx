@@ -1,19 +1,18 @@
 
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo'
+import Icon from 'react-native-vector-icons/Ionicons'
 import TextFont from '../text';
 import { color } from '../../theme'
 
 
 
 const Index = (props) => {
-    const { from, to, size = 16 } = props
+    const { places = 0 , size = 16 } = props
     return (
         <View style={ styles.container }>
-            <TextFont style={{...styles.text,fontSize: size,paddingRight : 10}}>{from}</TextFont>
-            <Icon name="arrow-long-right" size={size} color={color.black}/>
-            <TextFont style={{...styles.text,fontSize: size,paddingLeft : 10}}>{to}</TextFont>
+            <TextFont style={{...styles.text,fontSize: size}}>{places}</TextFont>
+            <Icon name="person" size={size} color={color.black}/>
         </View>
     );
 }
