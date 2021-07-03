@@ -16,7 +16,7 @@ const Index = (props) => {
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChangeText={onChange}
-                placeholder={placeholder}
+                placeholder="Aa"
                 style={styles.text}
                 placeholderTextColor={placeholderColor}
             />

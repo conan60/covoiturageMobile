@@ -65,7 +65,7 @@ export default function App() {
               {/* <Messages/> */}
               {/* <Collapse/> */}
               {/* <Modal/> */}
-              {/* <Auth /> */}
+              <Auth />
               {/* <Covoiturage distance={11}/> */}
               {/* <RecentCov/> */}
               {/* <Status size={50} status="refuse" onClick={()=>console.log("malek")} /> */}

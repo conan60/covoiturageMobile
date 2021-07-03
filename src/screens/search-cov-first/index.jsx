@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons'
 import AutoComplete from "../../components/input-autocomplete";
+import Button from '../../components/button'
 import Maps from "../../components/maps";
 import { color } from "../../theme"
 import searchLocation from '../../services/get-map-suggestions'
@@ -35,6 +36,7 @@ const Index= (props)=> {
             list={locationDep}
             />
             <View style={styles.marge}/>
+
         <AutoComplete
             onChange={e => {
               searchLocation(e)
@@ -48,6 +50,10 @@ const Index= (props)=> {
             zIndex={2}
             list={locationDest}
             />
+            <View style={styles.marge}/>
+            <View style={{width : "100%",flexDirection : "row", justifyContent : "flex-end"}}>
+              <Button text="Recherche" onClick={()=>navigation.push('SearchCovSecond')}/>
+            </View>
       </View>
 
       <View style={styles.map}>
