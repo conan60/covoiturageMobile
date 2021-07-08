@@ -28,18 +28,18 @@ const Index = (props) => {
         <View style={styles.container}>
             <View style={styles.user}>
             <View style={{flexDirection:'row', alignItems : 'center'}}>
-                <FromTo from={from} to={to} size={20}/>
+                <FromTo from={from} to={to} size={16}/>
                 <View style={{width : 10 }}/>
-                <TextFont weight='bold' style={styles.text}>{`${price} DT`}</TextFont>
+                <TextFont weight='bolder' style={styles.text}>{`${price} DT`}</TextFont>
                 </View>
                 <View style={{flexDirection:'row'}}>
                 <TextFont style={styles.text}>{date}</TextFont>
                 <View style={{width : 10 }}/>
                 <TextFont style={styles.text}>{hour}</TextFont>
                 <View style={{width : 10 }}/>
-                <NbrPlaces places={nbrPlaces} size={20}/>
+                <NbrPlaces places={nbrPlaces} size={16}/>
                 </View>
-                <View style={{flexDirection:'row'}}>{Object.entries(prefs).map(([pref,value]) => <Pref name={pref} interdit={value} color={color.black} size={20} />)}</View>
+                <View style={{flexDirection:'row'}}>{Object.entries(prefs).map(([pref,value]) => <Pref key={pref} name={pref} interdit={!value} color={color.black} size={16} />)}</View>
             </View>
             <View style={styles.cov}>
                 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     text : {
-        fontSize : 20
+        fontSize : 16
     }
 });
 

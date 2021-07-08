@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import CovCreated from "../../components/covoiturage-create";
 import { color } from "../../theme";
+import axios from '../../services/api'
+import showToast from "../../services/show-toast";
+import {getTime, getDate} from "../../services/date-time";
+
 
 const mockMessage = [
   {
-    prefs : {luggage : true,pets : false,smoking : true,'musical-notes' : true}, 
-    price : 12,
-    rate: 3.5,
+    prefs: { luggage: true, pets: false, smoking: true, "musical-notes": true },
+    price: 12,
     nbrPlaces: 4,
     from: "Msaken",
     to: "Tunis",
@@ -15,8 +18,13 @@ const mockMessage = [
     date: "02/10",
   },
   {
-    prefs : {comments : false,pets : false,smoking : true,'musical-notes' : true}, 
-    price : 10,
+    prefs: {
+      comments: false,
+      pets: false,
+      smoking: true,
+      "musical-notes": true,
+    },
+    price: 10,
     nbrVote: 83,
     rate: 4,
     nbrPlaces: 2,
@@ -28,8 +36,8 @@ const mockMessage = [
     status: "accept",
   },
   {
-    prefs : {pets : true,smoking : true,'musical-notes' : true}, 
-    price : 15,
+    prefs: { pets: true, smoking: true, "musical-notes": true },
+    price: 15,
     nbrVote: 2,
     rate: 1,
     nbrPlaces: 1,
@@ -41,8 +49,8 @@ const mockMessage = [
     status: "refuse",
   },
   {
-    prefs : {pets : true,smoking : false,'musical-notes' : false}, 
-    price : 18,
+    prefs: { pets: true, smoking: false, "musical-notes": false },
+    price: 18,
     nbrVote: 53,
     rate: 5,
     nbrPlaces: 4,
@@ -54,8 +62,13 @@ const mockMessage = [
     status: "wait",
   },
   {
-    prefs : {pets : false,smoking : true,'musical-notes' : false, luggage : false}, 
-    price : 5,
+    prefs: {
+      pets: false,
+      smoking: true,
+      "musical-notes": false,
+      luggage: false,
+    },
+    price: 5,
     nbrVote: 223,
     rate: 5,
     nbrPlaces: 2,
@@ -67,8 +80,8 @@ const mockMessage = [
     status: "wait",
   },
   {
-    prefs : {group : false,pets : false,smoking : true,'musical-notes' : true}, 
-    price : 20,
+    prefs: { group: false, pets: false, smoking: true, "musical-notes": true },
+    price: 20,
     nbrVote: 23,
     rate: 3.5,
     nbrPlaces: 5,
@@ -80,8 +93,13 @@ const mockMessage = [
     status: "accept",
   },
   {
-    prefs : {comments : false,pets : false,smoking : true,'musical-notes' : true}, 
-    price : 11,
+    prefs: {
+      comments: false,
+      pets: false,
+      smoking: true,
+      "musical-notes": true,
+    },
+    price: 11,
     nbrVote: 23,
     rate: 3.5,
     nbrPlaces: 3,
@@ -96,17 +114,82 @@ const mockMessage = [
 
 const Index = (props) => {
   const { navigation } = props;
-  const [press, setPress] = useState({});
+
+  const [covoiturages, setCovoiturages] = useState([]);
+  const [refreshCov, setRefreshCov] = useState(0)
+
+  const deleteCov = (id)=>{
+    console.log(id)
+    showToast("Chargement...");
+      axios()
+        .then((instance) =>
+          instance
+            .delete(`/covoiturages/${id}`)
+            .then(({ data }) => {
+              if (data.error) {
+                console.log(data);
+                showToast("Un erreur s'est produit ❌");
+              } else {
+                console.log(data)
+                showToast("Supprimer avec success ✔️");
+                setRefreshCov(refreshCov+1)
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              showToast("Un erreur s'est produit ❌");
+            })
+        )
+        .catch((error) => {
+          console.log(error);
+          showToast("Un erreur s'est produit ❌");
+        });
+  }
+
+
+  useEffect(() => {
+      showToast("Chargement...");
+      axios()
+        .then((instance) =>
+          instance
+            .get("/covoiturages/me")
+            .then(({ data }) => {
+              if (data.error) {
+                console.log(data);
+                showToast("Un erreur s'est produit ❌");
+              } else {
+                console.log(data)
+                setCovoiturages(data.map(el=>({
+                  id : el._id,
+                  prefs: el.preference,
+                  price: el.price,
+                  nbrPlaces: el.numberPlaces,
+                  from: el.from.name,
+                  to: el.to.name,
+                  hour: getTime(new Date(el.date)),
+                  date: getDate(new Date(el.date)),
+                })))
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              showToast("Un erreur s'est produit ❌");
+            })
+        )
+        .catch((error) => {
+          console.log(error);
+          showToast("Un erreur s'est produit ❌");
+        });
+    
+  }, [refreshCov]);
+
   return (
     <ScrollView style={styles.container}>
-      {mockMessage.map((el, index) => (
+      {covoiturages.map((el) => (
         <CovCreated
-          key={index}
+          key={el.id}
           {...el}
-          onClick={() => null}
-          onClickUser={() => navigation.push("Profil")}
-          onAccept={() => null}
-          onRefuse={() => null}
+          onDelete={()=>deleteCov(el.id)}
         />
       ))}
       <View style={{ height: 20 }} />

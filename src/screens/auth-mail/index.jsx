@@ -1,18 +1,38 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Image } from "react-native";
+import * as SecureStore from 'expo-secure-store';
 import Icon from "react-native-vector-icons/Ionicons";
-import TextFont from "../../components/text";
 import Link from "../../components/link";
 import Button from "../../components/button";
 import RoundedButton from '../../components/rounded-button'
 import TextInput from '../../components/input-icon'
-import { color } from "../../theme";
+import { color } from "../../theme"
+import axios from '../../services/api'
+import showToast from "../../services/show-toast";
 
 const Index= (props)=> {
   const { navigation,route } = props;
   const {setAuth} = route.params
 
-  const [press, setPress] = useState({});
+  const [payload, setPayload] = useState({});
+
+  const signIn = ()=>{
+    showToast("Chargement...") 
+    axios().then(instance=>instance.post('/users/login',payload)
+    .then(({data})=>{
+      if(data.error)
+        {console.log(data)
+       showToast(data.details.details[0].message) }
+      else{
+        SecureStore.setItemAsync('token',data.token)
+        setAuth(true)
+      }
+    })
+    .catch(error=>{
+        console.log(error)
+        showToast('Un erreur s\'est produit')
+      }))
+  }
 
 
   return (
@@ -22,27 +42,27 @@ const Index= (props)=> {
           style={{ resizeMode: "contain", width: 162 }}
           source={require("../../../assets/logo/YallaCo.png")}
         />
-        <TextFont weight="bold" style={{ fontSize: 24 }}>Continuer avec :</TextFont>
       </View>
 
       <View style={styles.input}>
             <TextInput
               placeholder="Email"
-              onChange={e => console.log(e)}
+              onChange={(e) => setPayload({...payload,email : e})}
               icon={() => <Icon name="mail" size={16} color={color.black} />}
               bgColor={color.white}
               placeholderColor={color.black}
             />
             <TextInput
               placeholder="Password"
-              onChange={e => console.log(e)}
+              onChange={(e) => setPayload({...payload,password : e})}
               icon={() => <Icon name="key" size={16} color={color.black} />}
               bgColor={color.white}
               placeholderColor={color.black}
+              isPass
             />
         <Button
           text="Se connecter"
-          onClick={() => setAuth(true)}
+          onClick={ signIn}
         />
         
         <Link

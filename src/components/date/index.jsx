@@ -4,6 +4,7 @@ import DateTimePicker from "@react-native-community/datetimepicker"
 import Icon from "react-native-vector-icons/Ionicons"
 import Text from '../../components/text'
 import {color,size as defaultSize} from '../../theme'
+import { getDate, getTime} from "../../services/date-time"
 
 
 const ButtonIcon = (props)=> {
@@ -48,22 +49,6 @@ const ButtonIcon = (props)=> {
 }
 
 
-
-
-const getTime = (date)=>{
-    const minutes = date.getMinutes().toString().length === 1 ? `0${date.getMinutes()}` : date.getMinutes()
-    const hours = date.getHours().toString().length === 1 ? `0${date.getHours()}` : date.getHours()
-
-    return`${hours}:${minutes}`
-}
-const getDate = (date)=>{
-    const year = date.getFullYear()
-    const month = (date.getMonth()+1).toString().length === 1 ? `0${date.getMonth()+1}` : date.getMonth()+1
-    const day = date.getDate().toString().length === 1 ? `0${date.getDate()}` : date.getDate()
-
-    return`${day}/${month}/${year}`
-}
-
 export default App = (props) => {
   const { mode = "date" , onChange = ()=>null,minDate,maxDate } = props;
   const [date, setDate] = useState(new Date(Date.now()));
@@ -89,7 +74,7 @@ export default App = (props) => {
       {mode === "time" && (
         <ButtonIcon
           text={getTime(date)}
-          icon={() => <Icon name="time" size={16} color={color.black} />}
+          icon={() => <Icon name="time" size={18} color={color.black} />}
           onClick={() => setShow(true)}
         />
       )}

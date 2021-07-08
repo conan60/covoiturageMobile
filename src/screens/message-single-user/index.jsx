@@ -1,50 +1,104 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView,View } from "react-native";
 import Message from "../../components/message";
 import InputMessage from "../../components/send-message";
 import { color } from "../../theme";
+import showToast from "../../services/show-toast";
+import axios from "../../services/api";
+import socket from "../../services/web-socket";
+import { getDate } from "../../services/date-time";
 
 
-const mockMessage=[
-  { text : 'Salem' , type : 'sent' },
-  { text : 'Ahla' , type : 'received' },
-  { text : 'Winek ca va ?' , type : 'sent' },
-  { text : 'We hamdoullah' , type : 'received' },
-  { text : 'Wenti' , type : 'received' },
-  { text : '??' , type : 'received' },
-  { text : 'Hawna labess' , type : 'sent' },
-  { text : 'Win nastannek' , type : 'sent' },
-  { text : 'Win t7eb enti' , type : 'received' },
-  { text : 'Kiosque Agile' , type : 'sent' },
-  { text : '??' , type : 'sent' },
-  { text : 'We ca va ' , type : 'received' },
-  { text : 'Drayaj nkoun a7thek' , type : 'received' },
-  { text : 'Ok' , type : 'sent' },
-  
-
-]
 
 const Index = (props) =>{
-  const {navigation} = props
-  const [press, setPress] = useState({});
+  const {route} = props
+  const {userId, name} = route.params
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  // let socket = createSocket()
+
+  // socket.addEventListener("message",(data)=>console.log(data))
+  
+  useEffect(() => {
+      socket.connect()
+      socket.on('ping',(msg)=>console.log('connected'))
+      showToast("Chargement...");
+      axios()
+        .then((instance) =>
+          instance
+            .get(`/messages`)
+            .then(({ data }) => {
+              if (data.error) {
+                console.log(data);
+                showToast("Un erreur s'est produit ❌");
+              } else {
+                console.log(data);
+                setMessages(data[0].messages)
+                showToast("Succes ✔️");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              showToast("Un erreur s'est produit ❌");
+            })
+        )
+        .catch((error) => {
+          console.log(error);
+          showToast("Un erreur s'est produit ❌");
+        });
+    }, [])
+
+
+    const sendMessage = () => {
+      socket.emit('message','message');
+      showToast("Chargement...");
+      
+      axios()
+        .then((instance) =>
+          instance
+            .post(`/messages`,{toUserId : userId,content : message})
+            .then(({ data }) => {
+              if (data.error) {
+                console.log(data);
+                showToast("Un erreur s'est produit ❌");
+              } else {
+                console.log(data);
+                setMessages([...messages,{content : message, type : 'sent',date : data.date}])
+                setMessage('');
+                showToast("Message envoyer avec succes ✔️");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              showToast("Un erreur s'est produit ❌");
+            })
+        )
+        .catch((error) => {
+          console.log(error);
+          showToast("Un erreur s'est produit ❌");
+        });
+    }
+
+
   return (
     <View style={styles.container}>
     <ScrollView>
       
       <View style={{height : 10}}/>
-      {mockMessage.map((el,index)=><Message
-        name="Malek Gorchene"
-        key={index}
+      {messages.map((el,index)=><Message
+        name={name}
+        key={el.date}
         {...el}
       />)}
       <View style={{height : 20}}/>
     </ScrollView>
     <View style={{height : 10}}/>
     <InputMessage
-      placeholder="Recherche"
-      onChange={e => console.log(e)}
+      value={message}
+      onChange={e => setMessage(e)}
       bgColor={color.white}
       placeholderColor={color.black}
+      onSubmit={sendMessage}
       />
     </View>
   );

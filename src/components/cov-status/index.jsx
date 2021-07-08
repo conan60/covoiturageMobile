@@ -27,13 +27,13 @@ const Index = (props)=> {
     }
   });
   switch(status){
-    case 'wait': Button=(<TouchableOpacity activeOpacity={opacity} onPress={onClick} style={{...styles.button,backgroundColor : color.white}}>
+    case 'waiting': Button=(<TouchableOpacity activeOpacity={opacity} onPress={onClick} style={{...styles.button,backgroundColor : color.white}}>
       <Icon name="ellipsis-horizontal" size={sizeIcon} color={color.black}/>
     </TouchableOpacity>);break;
-    case 'accept': Button=(<TouchableOpacity activeOpacity={opacity} onPress={onClick} style={styles.button}>
+    case 'accepted': Button=(<TouchableOpacity activeOpacity={opacity} onPress={onClick} style={styles.button}>
       <Icon name="checkmark" size={sizeIcon} color={color.black}/>
     </TouchableOpacity>);break;
-    case 'refuse': Button=(<TouchableOpacity activeOpacity={opacity} onPress={onClick} style={{...styles.button,backgroundColor : color.black}}>
+    case 'refused': Button=(<TouchableOpacity activeOpacity={opacity} onPress={onClick} style={{...styles.button,backgroundColor : color.black}}>
       <Icon name="close" size={sizeIcon} color={color.white}/>
     </TouchableOpacity>);break;
   }

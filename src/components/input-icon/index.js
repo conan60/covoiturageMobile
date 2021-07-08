@@ -6,7 +6,7 @@ import { PressOutsideContext } from '../../../App'
 
 
 const Index = (props) => {
-    const { placeholder, icon, onChange, bgColor, placeholderColor, value, isPass, onFocus, onBlur } = props
+    const { placeholder, icon, onChange, bgColor, placeholderColor, value, isPass, onFocus, onBlur, editable = true, onPress,showKeyboard = true } = props
     const refInput = useRef(null)
     const pressOutside = useContext(PressOutsideContext)
     useEffect(() => {
@@ -16,7 +16,10 @@ const Index = (props) => {
         <View style={{ ...styles.input, backgroundColor: bgColor }}>
             <View style={styles.icon}>{icon()}</View>
             <TextInput
-                // value={value}
+                showSoftInputOnFocus={showKeyboard}
+                onPressIn={onPress}
+                editable={editable}
+                value={value}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 ref={refInput}

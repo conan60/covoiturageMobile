@@ -6,12 +6,12 @@ import { color, size } from '../../theme'
 
 
 const Index = (props) => {
-    const { placeholder, onChange, bgColor, placeholderColor, value, onFocus, onBlur, onSubmit } = props
+    const {  onChange, bgColor, placeholderColor, value, onFocus, onBlur, onSubmit = ()=>null } = props
     return (
         <View style={{ ...styles.input, backgroundColor: bgColor }}>
             
             <TextInput
-                // value={value}
+                value={value}
                 multiline
                 onFocus={onFocus}
                 onBlur={onBlur}

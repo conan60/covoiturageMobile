@@ -98,44 +98,44 @@ const Index = (props) => {
             from="Bizert"
             to="Mahdia"
             price={20}
-            onClick={() => navigation.push("SearchCovSecond")}
+            onClick={() => navigation.push("SearchCovFirst")}
           />
-          <RecentCov onClick={() => navigation.push("SearchCovSecond")} />
+          <RecentCov onClick={() => navigation.push("SearchCovFirst")} />
           <RecentCov
             from="Sousse"
             to="Gassrin"
             price={30}
-            onClick={() => navigation.push("SearchCovSecond")}
+            onClick={() => navigation.push("SearchCovFirst")}
           />
           <RecentCov
             from="Beja"
             to="Mahdia"
             price={10}
-            onClick={() => navigation.push("SearchCovSecond")}
+            onClick={() => navigation.push("SearchCovFirst")}
           />
           <RecentCov
             from="Jendouba"
             to="Mahdia"
             price={20}
-            onClick={() => navigation.push("SearchCovSecond")}
+            onClick={() => navigation.push("SearchCovFirst")}
           />
           <RecentCov
             from="Bizert"
             to="Nabeul"
             price={12}
-            onClick={() => navigation.push("SearchCovSecond")}
+            onClick={() => navigation.push("SearchCovFirst")}
           />
           <RecentCov
             from="Tataouin"
             to="Sfax"
             price={17}
-            onClick={() => navigation.push("SearchCovSecond")}
+            onClick={() => navigation.push("SearchCovFirst")}
           />
           <RecentCov
             from="Bizert"
             to="Mahdia"
             price={25}
-            onClick={() => navigation.push("SearchCovSecond")}
+            onClick={() => navigation.push("SearchCovFirst")}
           />
         </ScrollView>
       </View>

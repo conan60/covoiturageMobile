@@ -21,7 +21,7 @@ const Index = (props) => {
         hour = "10:00",
         date = "02/10",
         distance = 1,
-        status = "wait",
+        status = "waiting",
         onAccept = () => null,
         onRefuse = () => null,
         onClickUser = () => null
@@ -57,11 +57,11 @@ const Index = (props) => {
             </View>
             <View style={styles.cov}>
                 {
-                    status === 'wait' ?
+                    status === 'waiting' ?
                         <>
-                            <CovStatus onClick={onAccept} status="accept" size={32} />
+                            <CovStatus onClick={onAccept} status="accepted" size={32} />
                             <View style={{ height: 10 }} />
-                            <CovStatus onClick={onRefuse} status="refuse" size={32} />
+                            <CovStatus onClick={onRefuse} status="refused" size={32} />
                         </>
                         :
                         <CovStatus status={status} size={32} />

@@ -10,12 +10,17 @@ import { color } from "../../theme";
 
 
 const Index = (props)=> {
-    const {title = "Params", content =null} = props
+    const {title = "Params", content =null,onPress = ()=>null} = props
     const [state,setState] = useState(true)
+
+    const pressTitle = ()=>{
+        setState(!state)
+        onPress()
+    }
 
     return (
     <View style={styles.container}>
-        <Link weight="bold" onPress={()=>setState(!state)} style={styles.collapseHeader}>{title}</Link>
+        <Link weight="bold" onPress={pressTitle} style={styles.collapseHeader}>{title}</Link>
         <View style={styles.divider}/>
       <Collapse
         collapsed={state}

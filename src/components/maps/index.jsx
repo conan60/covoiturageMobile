@@ -35,19 +35,18 @@ const Index = (props) => {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
         })
-          .then((geocode) => setPositionName(geocode))
+          .then((geocode) => setPositionName(geocode,location.coords))
           .catch((err) => Alert.alert(err.message));
       })
       .catch((err) => Alert.alert(err.message));
   };
 
   const handlePosition = (nativePosition) => {
-    onChangePosition(nativePosition);
     getGeocodeFromPosition({
       latitude: nativePosition.coordinate.latitude,
       longitude: nativePosition.coordinate.longitude,
     })
-      .then((geocode) => setPositionName(geocode))
+      .then((geocode) =>setPositionName(geocode,nativePosition?.coordinate))
       .catch((err) => Alert.alert(err.message));
     setPositionState({
       latitude: nativePosition.coordinate.latitude,
@@ -55,10 +54,17 @@ const Index = (props) => {
     });
   };
 
-  const setPositionName = (array) => {
+  const setPositionName = (array,location) => {
+    console.log(location)
     const [geocode] = Array.isArray(array) ? array : [];
     const city = geocode.district || geocode.subregion || geocode.city || "";
+    onChangePosition({
+      name : `${geocode.region}${city && ", " + city}`,
+      longitude : location.longitude,
+      latitude : location.latitude
+    })
     setGeocode(`${geocode.region}${city && ", " + city}`);
+    
   };
 
   useEffect(() => {

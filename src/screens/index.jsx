@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as SecureStore from 'expo-secure-store';
+import ShowToast from '../services/show-toast'
 import { color } from "../theme";
 
 import AccountParams from "./account-params";
@@ -68,6 +70,18 @@ const customHeader = (screens, setAuth) => {
 
 const Index = () => {
   const [isAuth, setIsAuth] = useState(null);
+
+  useEffect(()=>{
+    SecureStore.getItemAsync('token')
+    .then(token=>token?setIsAuth(true):setIsAuth(false))
+    .catch(err=>ShowToast("Un erreur s'est produit!"))
+  },[isAuth])
+
+
+  // For not showing any UI
+  if(isAuth === null) return null
+
+
   return (
     <>
       {isAuth ? (
@@ -84,7 +98,7 @@ const Index = () => {
             headerTitleAlign: "center",
           }}
         >
-          {customHeader(Screens.userScreens)}
+          {customHeader(Screens.userScreens,setIsAuth)}
         </Stack.Navigator>
       ) : (
         <Stack.Navigator

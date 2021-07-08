@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import CovReceived from "../../components/covoiturage-received";
 import { color } from "../../theme";
+import showToast from "../../services/show-toast";
+import axios from '../../services/api'
+import {getTime, getDateShort} from "../../services/date-time";
 
 const mockMessage = [
   {
@@ -100,17 +103,82 @@ const mockMessage = [
 
 const Index = (props) => {
   const { navigation } = props;
-  const [press, setPress] = useState({});
+  const [cov, setCov] = useState([]);
+  const [covUpdate, setCovUpdate] = useState(0);
+
+  const changeStatusCov = (status,reqCovId)=>{
+    showToast("Chargement...") 
+    axios().then(instance=>instance.put(`/covoiturageRequests/${reqCovId}`,{status})
+    .then(({data})=>{
+      if(data.error)
+        {console.log(data)
+       showToast('Un erreur s\'est produit ❌') 
+      }
+      else{
+        console.log(data)
+        showToast('Reponse envoyer avec succes ✔️')
+        setCovUpdate(covUpdate+1)
+      }
+    })
+    .catch(error=>{
+        console.log(error)
+        showToast('Un erreur s\'est produit ❌')
+      })).catch(error=>{
+        console.log(error)
+        showToast('Un erreur s\'est produit ❌')
+      })
+  }
+
+  useEffect(()=>{
+    showToast("Chargement...") 
+    axios().then(instance=>instance.get('/covoiturageRequests/received')
+    .then(({data})=>{
+      if(data.error)
+        {console.log(data)
+       showToast('Un erreur s\'est produit ❌') 
+      }
+      else{
+        console.log(data)
+        showToast('Succes ✔️')
+        setCov(  data.map(el=>({
+          id : el._id,
+          userId : el.fromUserId?._id,
+          votes : el.fromUserId?.eval,
+          name : el.fromUserId?.name,
+          date : el.covoiturageId?.date,
+          from : el.covoiturageId?.from?.name,
+          rate : (el.fromUserId?.eval || []).map(el=>el.rate).reduce((a, b) => a + b,0) / (el.fromUserId?.eval || []).length,
+          nbrVote : (el.fromUserId?.eval || []).length,
+          to : el.covoiturageId?.to?.name,
+          price : el.covoiturageId?.price,
+          nbrPlaces : el.covoiturageId?.numberPlaces,
+          prefs : el.covoiturageId?.preference,
+          hour : getTime(new Date(el.covoiturageId?.date)),
+          date : getDateShort(new Date(el.covoiturageId?.date)),
+          distance : 6,
+          status : el.status
+        })) )
+      }
+    })
+    .catch(error=>{
+        console.log(error)
+        showToast('Un erreur s\'est produit ❌')
+      })).catch(error=>{
+        console.log(error)
+        showToast('Un erreur s\'est produit ❌')
+      })
+  },[covUpdate])
+
+
   return (
     <ScrollView style={styles.container}>
-      {mockMessage.map((el, index) => (
+      {cov.map((el) => (
         <CovReceived
-          key={index}
+          key={el.id}
           {...el}
-          onClick={() => null}
-          onClickUser={() => navigation.push("Profil")}
-          onAccept={() => null}
-          onRefuse={() => null}
+          onClickUser={() => navigation.navigate("Profil",el)}
+          onAccept={() => changeStatusCov('accepted',el.id)}
+          onRefuse={() => changeStatusCov('refused',el.id)}
         />
       ))}
       <View style={{ height: 20 }} />

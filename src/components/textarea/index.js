@@ -10,7 +10,7 @@ const Index = (props) => {
         <View style={{ ...styles.input, backgroundColor: bgColor }}>
             
             <TextInput
-                // value={value}
+                value={value}
                 multiline
                 onFocus={onFocus}
                 onBlur={onBlur}

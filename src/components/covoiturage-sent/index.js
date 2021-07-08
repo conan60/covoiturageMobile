@@ -21,7 +21,7 @@ const Index = (props) => {
         hour = "10:00",
         date = "02/10",
         distance = 1,
-        status = "wait",
+        status = "waiting",
         onClick = () => null,
         onClickUser = () => null
     } = props

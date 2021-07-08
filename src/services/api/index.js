@@ -1,8 +1,9 @@
 import axios from 'axios'
+import config from '../../config';
 import getAuthorisation from '../get-token'
 
 
-const instance = axios.create({
+const instance = async()=> axios.create({
   // `url` is the server URL that will be used for the request
   //url: '/user',
 
@@ -12,18 +13,18 @@ const instance = axios.create({
   // `baseURL` will be prepended to `url` unless `url` is absolute.
   // It can be convenient to set `baseURL` for an instance of axios to pass relative URLs
   // to methods of that instance.
-  baseURL: 'http://localhost/api/',
+  baseURL: config.baseUrl,
 
   // `transformRequest` allows changes to the request data before it is sent to the server
   // This is only applicable for request methods 'PUT', 'POST', 'PATCH' and 'DELETE'
   // The last function in the array must return a string or an instance of Buffer, ArrayBuffer,
   // FormData or Stream
   // You may modify the headers object.
-  transformRequest: [function (data, headers) {
-    // Do whatever you want to transform the data
+// transformRequest: [function (data, headers) {
+//   // Do whatever you want to transform the data
 
-    return data;
-  }],
+//   return data;
+// }],
 
   // `transformResponse` allows changes to the response data to be made before
   // it is passed to then/catch
@@ -35,12 +36,12 @@ const instance = axios.create({
 
   // `headers` are custom headers to be sent
   headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Accept-Version': 1,
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept-Version': 1,
         'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json; charset=utf-8',
-        ...getAuthorisation(),
+        ...(await getAuthorisation()),
     },
 
   // `params` are the URL parameters to be sent with the request

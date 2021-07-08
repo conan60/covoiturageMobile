@@ -7,37 +7,33 @@ import Covoiturage from "../../components/covoiturage";
 import { color } from "../../theme";
 
 export default function App(props) {
-  const { navigation } = props;
-  const [state, setState] = useState(0);
+  const { navigation, route } = props;
+  console.log("Second", route.params);
+  const [placesFilter, setPlacesFilter] = useState(1);
   return (
     <View style={styles.container}>
       <View style={styles.w100}>
         <Text>
           {" "}
           <Icon name="filter" size={20} color={color.black} />
-          {`Filtre par nombre des places : ${state}`}
+          {`Filtre par nombre des places : ${placesFilter}`}
         </Text>
         <View style={{ width: "100%" }}>
-          <Slide min={0} max={4} onChange={(nbr) => setState(nbr)} />
+          <Slide min={1} max={8} onChange={(nbr) => setPlacesFilter(nbr)} />
         </View>
       </View>
       <ScrollView style={{ ...styles.w100 }}>
-        <Covoiturage
-          name="Malek Gorchene"
-          nbrVote={23}
-          rate={3.5}
-          price={15}
-          nbrPlaces={4}
-          from="Msaken"
-          to="Tunis"
-          prefs={{ pets: false, smoking: true, "musical-notes": false }}
-          hour="15:00"
-          date="02/10"
-          distance={5}
-          onClick={() => navigation.push("RequestCovFirst")}
-          onClickUser={() => navigation.push("Profil")}
-        />
-        <Covoiturage
+        {(route.params?.data || [])
+          .filter((el) => el.nbrPlaces >= placesFilter)
+          .map((el) => (
+            <Covoiturage
+              key={el.id}
+              {...el}
+              onClick={() => navigation.push("RequestCovFirst", el)}
+              onClickUser={() => navigation.navigate("Profil", el)}
+            />
+          ))}
+        {/* <Covoiturage
           name="Haroun Gorchene"
           image="https://media-exp3.licdn.com/dms/image/C4D03AQHlKp72u4Oyfw/profile-displayphoto-shrink_200_200/0/1534887781047?e=1628121600&v=beta&t=YVPKm42tspAtX84Qwla6zL8bQjsbKUfpFR_neeCRCdg"
           nbrVote={53}
@@ -130,7 +126,7 @@ export default function App(props) {
           distance={15}
           onClick={() => navigation.push("RequestCovFirst")}
           onClickUser={() => navigation.push("Profil")}
-        />
+        /> */}
         <View style={{ height: 30 }} />
       </ScrollView>
     </View>

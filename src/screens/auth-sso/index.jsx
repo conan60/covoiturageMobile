@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import TextFont from "../../components/text";
 import Link from "../../components/link";
 import Button from "../../components/signup-button";
 import { color } from "../../theme";
+import SignIn from "../../services/sign-in-google";
 
 const Index= (props)=> {
   const { navigation,route } = props;
   const {setAuth} = route.params
 
   const [press, setPress] = useState({});
+
+  // useEffect(()=>{
+  //   SignIn.initAsync().then(e=>console.log(e)).catch(e=>console.log(e))
+  //   },[])
 
 
   return (

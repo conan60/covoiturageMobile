@@ -3,7 +3,7 @@ import {
   Modal,
   StyleSheet,
   Pressable,
-  ScrollView,
+  Dimensions,
   View,
 } from "react-native";
 import TextFont from "../text";
@@ -11,25 +11,24 @@ import Button from "../button";
 import { color, size } from "../../theme";
 
 const Index = (props) => {
-  const { onSubmit, content, modalName = "Modal", visibility = true } = props;
-  const [modalVisible, setModalVisible] = useState(visibility);
+  const { onSubmit = ()=>null, content, modalName = "Modal", visibility = true, setVisibility= ()=>null } = props;
   const handleValidate = (element) => {
     onSubmit(element);
-    setModalVisible(!modalVisible);
+    setVisibility(!visibility);
   };
 
   return (
     <Modal
       animationType="fade"
       transparent={true}
-      visible={modalVisible}
+      visible={visibility}
       onRequestClose={() => {
-        setModalVisible(!modalVisible);
+        setVisibility(!visibility);
       }}
     >
       <Pressable
         style={styles.backdrop}
-        onPress={() => setModalVisible(!modalVisible)}
+        onPress={() => setVisibility(!visibility)}
       />
       <View style={styles.container}>
         <View style={styles.content}>
@@ -37,15 +36,16 @@ const Index = (props) => {
             {modalName}
           </TextFont>
           <View style={styles.scroll}>
-            <ScrollView>{content}</ScrollView>
+            {content}
           </View>
           <View style={styles.button}>
             <Button
               text="Annuler"
               bgColor={color.black}
               textColor={color.white}
-              onClick={() => setModalVisible(!modalVisible)}
+              onClick={() => setVisibility(!visibility)}
             />
+            <View style={{width : 10}}/>
             <Button text="Valider" onClick={handleValidate} />
           </View>
         </View>
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scroll: {
+    width : (Dimensions.get("window").width)-40,
     paddingVertical: 10,
     flex: -1,
     justifyContent: "center",
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
   backdrop: {

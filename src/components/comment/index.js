@@ -9,37 +9,37 @@ import { color, size } from '../../theme'
 
 
 const Index = (props) => {
-    const { 
-        name = "Malek Gorchene",
-     image, 
-     comment = "This is a good speaker but not a good driver This is a good speaker but not a good driver", 
-     rate =3.5, 
-     hour: time = "02/10/21",
-     onClickUser =()=>null
+    const {
+        // name = "Malek Gorchene",
+        //  image, 
+        comment = "This is a good speaker but not a good driver This is a good speaker but not a good driver",
+        rate = 3.5,
+        date = "02/10/21",
+        //  onClickUser =()=>null
     } = props
 
-    const splitName = name.split(' ')
-    const title = `${splitName[0]?.[0]?.toUpperCase()}${splitName[1]?.[0]?.toUpperCase()}`
+    // const splitName = name.split(' ')
+    // const title = `${splitName[0]?.[0]?.toUpperCase()}${splitName[1]?.[0]?.toUpperCase()}`
 
     return (
-        
+
         <View style={styles.container}>
-            <View style={styles.avatar}>
+            {/* <View style={styles.avatar}>
                 <Avatar onPress={onClickUser} title={title} image={image}/>
-            </View>
+            </View> */}
             <View style={styles.user}>
                 <View>
-                    <TextFont weight="bold" style={styles.name}>{name}</TextFont>
-                   
-                        
-                        <TextFont>{comment}</TextFont>
-                    
+                    {/* <TextFont weight="bold" style={styles.name}>{name}</TextFont> */}
+
+
+                    <TextFont>{comment}</TextFont>
+
                 </View>
             </View>
             <View style={styles.cov}>
-            <Rating isDisabled value={rate} size={12} unselectedColor={color.gray}/>
-                <TextFont>{time}</TextFont>
-                
+                <Rating isDisabled value={rate} size={12} unselectedColor={color.gray} />
+                <TextFont>{date}</TextFont>
+
             </View>
         </View>
     )
@@ -48,34 +48,34 @@ const Index = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        marginTop : 10,
+        marginTop: 10,
         flexDirection: "row",
         justifyContent: 'center',
         borderRadius: size.defaultRadius,
-        backgroundColor : color.white,
-        padding : 10
+        backgroundColor: color.white,
+        padding: 10
     },
     avatar: {
-        flex :1,
+        flex: 1,
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
     user: {
-        flex : 3,
+        flex: 3,
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
     },
     cov: {
-        flex : 1,
+        flex: 1,
         flexDirection: 'column',
         alignItems: 'flex-end',
         justifyContent: 'space-between',
-        alignContent : 'stretch'
+        alignContent: 'stretch'
     },
     name: {
-        fontSize : 20
+        fontSize: 20
     }
 });
 

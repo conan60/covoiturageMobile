@@ -9,7 +9,7 @@ import { color, size } from '../../theme'
 
 const Index = (props) => {
     const { 
-        text = "Hello", 
+        content = "Hello", 
         time, 
         type = "sent", 
         name= "Malek Gorchene",
@@ -24,7 +24,7 @@ const Index = (props) => {
         <View style={ {...styles.container, justifyContent: type === 'received' ? 'flex-start' : 'flex-end'}}>
             {type === 'received' && <Avatar image={image} size="small" title={title} onPress={onClickIcon}/>}
             <View style={{...styles.text, backgroundColor : type === 'received' ? color.white : color.black}}>
-                <TextFont style={{color : type === 'received' ? color.black : color.white}}>{text}</TextFont>
+                <TextFont style={{color : type === 'received' ? color.black : color.white}}>{content}</TextFont>
             </View>
         </View>
     );
