@@ -33,7 +33,7 @@ const Index = (props) =>{
                 showToast("Un erreur s'est produit ❌");
               } else {
                 console.log(data);
-                setMessages(data[0].messages)
+                setMessages((data[0]?.messages || []))
                 showToast("Succes ✔️");
               }
             })

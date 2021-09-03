@@ -56,16 +56,18 @@ const Screens = {
 
 const Stack = createStackNavigator();
 
-const customHeader = (screens, setAuth) => {
-  return Object.entries(screens).map(([name, params]) => (
+const customHeader = (screens, setAuth, isAuth) => {
+  return Object.entries(screens).map(([name, params]) => {
+    const isAuthParam = name === "Home" ?{isAuth}:{}
+    return(
     <Stack.Screen
       name={name}
       component={params.component}
       options={params.hideBar ? {headerShown : false}: { title: params.title }}
-      initialParams={{ setAuth }}
+      initialParams={{ setAuth, ...isAuthParam }}
       key={name}
     />
-  ));
+  )});
 };
 
 const Index = () => {
@@ -98,7 +100,7 @@ const Index = () => {
             headerTitleAlign: "center",
           }}
         >
-          {customHeader(Screens.userScreens,setIsAuth)}
+          {customHeader(Screens.userScreens,setIsAuth,isAuth)}
         </Stack.Navigator>
       ) : (
         <Stack.Navigator
@@ -115,7 +117,7 @@ const Index = () => {
             headerShown: false,
           }}
         >
-          {customHeader(Screens.authScreens, setIsAuth)}
+          {customHeader(Screens.authScreens, setIsAuth,isAuth)}
         </Stack.Navigator>
       )}
     </>

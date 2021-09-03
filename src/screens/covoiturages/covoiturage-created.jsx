@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView, View } from "react-native";
+import { StyleSheet, ScrollView, View,Alert } from "react-native";
 import CovCreated from "../../components/covoiturage-create";
 import { color } from "../../theme";
 import axios from '../../services/api'
@@ -120,34 +120,45 @@ const Index = (props) => {
 
   const deleteCov = (id)=>{
     console.log(id)
-    showToast("Chargement...");
-      axios()
-        .then((instance) =>
-          instance
-            .delete(`/covoiturages/${id}`)
-            .then(({ data }) => {
-              if (data.error) {
-                console.log(data);
+    Alert.alert(
+      "Confirmation",
+      "Voulez-vous supprimer ce covoiturage ?",
+      [
+        {
+          text: "Non",
+          onPress: () =>null
+        },
+        { text: "Oui", onPress: () => {showToast("Chargement...");
+        axios()
+          .then((instance) =>
+            instance
+              .delete(`/covoiturages/${id}`)
+              .then(({ data }) => {
+                if (data.error) {
+                  console.log(data);
+                  showToast("Un erreur s'est produit ❌");
+                } else {
+                  console.log(data)
+                  showToast("Supprimer avec success ✔️");
+                  setRefreshCov(refreshCov+1)
+                }
+              })
+              .catch((error) => {
+                console.log(error);
                 showToast("Un erreur s'est produit ❌");
-              } else {
-                console.log(data)
-                showToast("Supprimer avec success ✔️");
-                setRefreshCov(refreshCov+1)
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-              showToast("Un erreur s'est produit ❌");
-            })
-        )
-        .catch((error) => {
-          console.log(error);
-          showToast("Un erreur s'est produit ❌");
-        });
+              })
+          )
+          .catch((error) => {
+            console.log(error);
+            showToast("Un erreur s'est produit ❌");
+          });} }
+      ]
+    );
+    
   }
 
 
-  useEffect(() => {
+  useEffect(() => {{
       showToast("Chargement...");
       axios()
         .then((instance) =>
@@ -179,7 +190,7 @@ const Index = (props) => {
         .catch((error) => {
           console.log(error);
           showToast("Un erreur s'est produit ❌");
-        });
+        });}
     
   }, [refreshCov]);
 

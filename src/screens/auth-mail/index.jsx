@@ -9,6 +9,7 @@ import TextInput from '../../components/input-icon'
 import { color } from "../../theme"
 import axios from '../../services/api'
 import showToast from "../../services/show-toast";
+import SafeView from '../../components/safe-view'
 
 const Index= (props)=> {
   const { navigation,route } = props;
@@ -25,7 +26,7 @@ const Index= (props)=> {
        showToast(data.details.details[0].message) }
       else{
         SecureStore.setItemAsync('token',data.token)
-        setAuth(true)
+        setAuth(data)
       }
     })
     .catch(error=>{
@@ -36,7 +37,7 @@ const Index= (props)=> {
 
 
   return (
-    <View style={styles.container}>
+    <SafeView style={styles.container}>
       <View style={styles.image}>
         <Image
           style={{ resizeMode: "contain", width: 162 }}
@@ -90,13 +91,13 @@ const Index= (props)=> {
           style={{ fontSize: 12,paddingBottom : 10 }}
         >{`Crée un compte`}</Link>
       </View>
-    </View>
+    </SafeView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "column",
     backgroundColor: color.gray,
     alignItems: "center",

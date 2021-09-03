@@ -13,7 +13,10 @@ import { ITEM_HEIGHT } from "../../components/slider";
 
 const Stack = createStackNavigator();
 
-const Global = ({navigation}) => {
+const Global = ({navigation, route}) => {
+  const {isAuth = "A A"} = route.params
+  const title = isAuth.name ? `${isAuth.name[0]}${isAuth.name.split(' ')[1][0]}` : "AD"
+
   return (
     <>
     <Stack.Navigator
@@ -48,8 +51,8 @@ const Global = ({navigation}) => {
             <View style={{ paddingLeft: 10 }}>
               <Avatar
                 size="small"
-                title="JS"
-                image="https://www.developpez.net/forums/attachments/p294178d1/a/a/a"
+                title={title}
+                // image="https://www.developpez.net/forums/attachments/p294178d1/a/a/a"
                 onPress={() => navigation.push("AccountParams")}
               />
             </View>
@@ -82,7 +85,6 @@ const Global = ({navigation}) => {
 
 const Index = (props) => {
   const { navigation, route } = props;
-  // const { setAuth } = route.params;
 
   const [press, setPress] = useState({});
 

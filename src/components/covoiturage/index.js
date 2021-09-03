@@ -46,7 +46,7 @@ const Index = (props) => {
                     </View>
                 </View>
                 <FromTo from={from} to={to}/>
-                <View style={{flexDirection:'row'}}>{Object.entries(prefs).map(([pref,value]) => <Pref name={pref} interdit={value} color={color.black} />)}</View>
+                <View style={{flexDirection:'row'}}>{Object.entries(prefs).map(([pref,value]) => <Pref key={pref} name={pref} interdit={!value} color={color.black} />)}</View>
             </View>
             <View style={styles.cov}>
                 <TextFont>{`${price} DT`}</TextFont>
